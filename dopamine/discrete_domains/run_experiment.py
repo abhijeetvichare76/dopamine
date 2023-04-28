@@ -28,6 +28,7 @@ from dopamine.agents.dqn import dqn_agent
 from dopamine.agents.implicit_quantile import implicit_quantile_agent
 from dopamine.agents.rainbow import rainbow_agent
 from dopamine.discrete_domains import atari_lib
+from dopamine.discrete_domains import carracing_lib
 from dopamine.discrete_domains import checkpointer
 from dopamine.discrete_domains import iteration_statistics
 from dopamine.discrete_domains import logger
@@ -163,7 +164,8 @@ class Runner(object):
   def __init__(self,
                base_dir,
                create_agent_fn,
-               create_environment_fn=atari_lib.create_atari_environment,
+              #  create_environment_fn=atari_lib.create_atari_environment,
+               create_environment_fn=carracing_lib.create_carracing_environment,
                checkpoint_file_prefix='ckpt',
                logging_file_prefix='log',
                log_every_n=1,
@@ -625,7 +627,9 @@ class TrainRunner(Runner):
   """
 
   def __init__(self, base_dir, create_agent_fn,
-               create_environment_fn=atari_lib.create_atari_environment):
+              #  create_environment_fn=atari_lib.create_atari_environment
+               create_environment_fn=carracing_lib.create_carracing_environment
+              ):
     """Initialize the TrainRunner object in charge of running a full experiment.
 
     Args:

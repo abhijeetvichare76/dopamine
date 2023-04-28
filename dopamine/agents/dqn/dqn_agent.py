@@ -24,7 +24,7 @@ import random
 
 from absl import logging
 
-from dopamine.discrete_domains import atari_lib
+from dopamine.discrete_domains import atari_lib, carracing_lib
 from dopamine.replay_memory import circular_replay_buffer
 import gin.tf
 import numpy as np
@@ -32,10 +32,10 @@ import tensorflow as tf
 
 
 # These are aliases which are used by other classes.
-NATURE_DQN_OBSERVATION_SHAPE = atari_lib.NATURE_DQN_OBSERVATION_SHAPE
-NATURE_DQN_DTYPE = atari_lib.NATURE_DQN_DTYPE
-NATURE_DQN_STACK_SIZE = atari_lib.NATURE_DQN_STACK_SIZE
-nature_dqn_network = atari_lib.NatureDQNNetwork
+NATURE_DQN_OBSERVATION_SHAPE = carracing_lib.NATURE_DQN_OBSERVATION_SHAPE
+NATURE_DQN_DTYPE = carracing_lib.NATURE_DQN_DTYPE
+NATURE_DQN_STACK_SIZE = carracing_lib.NATURE_DQN_STACK_SIZE
+nature_dqn_network = carracing_lib.NatureDQNNetwork
 
 
 @gin.configurable
@@ -76,10 +76,10 @@ class DQNAgent(object):
   def __init__(self,
                sess,
                num_actions,
-               observation_shape=atari_lib.NATURE_DQN_OBSERVATION_SHAPE,
-               observation_dtype=atari_lib.NATURE_DQN_DTYPE,
-               stack_size=atari_lib.NATURE_DQN_STACK_SIZE,
-               network=atari_lib.NatureDQNNetwork,
+               observation_shape=carracing_lib.NATURE_DQN_OBSERVATION_SHAPE,
+               observation_dtype=carracing_lib.NATURE_DQN_DTYPE,
+               stack_size=carracing_lib.NATURE_DQN_STACK_SIZE,
+               network=carracing_lib.NatureDQNNetwork,
                gamma=0.99,
                update_horizon=1,
                min_replay_history=20000,
@@ -217,7 +217,7 @@ class DQNAgent(object):
       # All tf.summaries should have been defined prior to running this.
       self._merged_summaries = tf.compat.v1.summary.merge_all()
 
-    var_map = atari_lib.maybe_transform_variable_names(
+    var_map = carracing_lib.maybe_transform_variable_names(
         tf.compat.v1.global_variables())
     self._saver = tf.compat.v1.train.Saver(
         var_list=var_map, max_to_keep=max_tf_checkpoints_to_keep)
